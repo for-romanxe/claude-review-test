@@ -18,7 +18,10 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: |
             이 PR의 변경된 코드를 리뷰해줘.
-            버그, 보안 문제(SQL injection 등), 비효율 코드, 안티패턴을 중점적으로 보고
-            문제가 있으면 파일:줄번호와 함께 한국어로 PR 코멘트를 남겨줘.
-            문제가 없으면 "이상 없음"이라고 알려줘.
-          claude_args: '--model claude-haiku-4-5-20251001'
+            버그, 보안 취약점(SQL injection, 하드코딩된 비밀번호 등),
+            비효율 코드, 안티패턴을 찾아라.
+            발견한 모든 문제에 대해 반드시 해당 파일의 해당 줄에
+            인라인 코멘트(inline comment)를 한국어로 남겨라.
+            문제가 하나도 없을 때만 PR에 "이상 없음" 종합 코멘트를 남겨라.
+            검토 결과를 절대 로그에만 남기지 말고 반드시 PR에 코멘트로 작성하라.
+          claude_args: '--model claude-sonnet-4-5 --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"'
